@@ -5,9 +5,10 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer} from 'react-navigation';
 import Login from './src/components/login/Login';
+import Register from './src/components/login/Register';
 
 const homeNavigator = createStackNavigator({
-  Login: Login,
+ Register: Register,
 });
 
 const AppContainer = createAppContainer(homeNavigator);
