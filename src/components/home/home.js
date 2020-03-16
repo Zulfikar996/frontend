@@ -7,6 +7,8 @@ import Category from '../category/category';
 import HomeScreen from '../home/homescreen';
 import Cart from '../cart/cart';
 import LoginScreen from '../login/LoginScreen';
+import Product from '../product/product';
+
 
 class Home extends Component {
   static navigationOptions = {
@@ -23,7 +25,7 @@ class Home extends Component {
                   <Icon style={styles.icon} name="home" />
                 </TabHeading>
               }>
-              <HomeScreen />
+              <Product />
             </Tab>
             <Tab
               heading={

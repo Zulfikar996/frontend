@@ -13,6 +13,7 @@ import Home from './src/components/home/home'
 import HomeScreen from './src/components/home/homescreen'
 import Cart from './src/components/cart/cart';
 import LoginScreen from './src/components/login/LoginScreen'
+import Product from './src/components/product/product'
 
 import {API_KEY} from 'react-native-dotenv';
 import {Text} from 'react-native';
@@ -25,6 +26,7 @@ const homeNavigator = createStackNavigator({
   HomeScreen: HomeScreen,
   Cart: Cart,
   LoginScreen: LoginScreen,
+  Product: Product,
 });
 
 const AppNavigator = createSwitchNavigator({
