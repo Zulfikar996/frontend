@@ -14,7 +14,6 @@ import HomeScreen from './src/components/home/homescreen'
 import Cart from './src/components/cart/cart';
 import LoginScreen from './src/components/login/LoginScreen'
 
-import {API_KEY} from 'react-native-dotenv';
 import {Text} from 'react-native';
 
 const homeNavigator = createStackNavigator({
