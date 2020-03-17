@@ -14,11 +14,10 @@ import bg from '../../../images/bg_putih.png';
 import logo from '../../../images/gayain.png';
 
 const {width: WIDTH} = Dimensions.get('window');
-static navigationOptions = {
+export default class Login extends Component {
+  static navigationOptions = {
     header: null,
   };
-
-export default class Login extends Component {
   constructor() {
     super();
     this.state = {
