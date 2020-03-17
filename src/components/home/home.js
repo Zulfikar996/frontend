@@ -16,6 +16,7 @@ import HomeScreen from '../home/homescreen';
 import Cart from '../cart/cart';
 import LoginScreen from '../login/LoginScreen';
 import Product from '../product/product'
+import {connect} from 'react-redux';
 
 class Home extends Component {
   static navigationOptions = {
@@ -56,9 +57,9 @@ class Home extends Component {
             <Tab
               heading={
                 <TabHeading style={styles.tab}>
-                  <Badge>
-                    <Text>1</Text>
-                  </Badge>
+                  <Badge >
+                <Text>{this.props.totalPurchase}</Text>
+              </Badge>
                   <Icon style={styles.icon} name="shoppingcart" />
                 </TabHeading>
               }>
@@ -88,4 +89,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+const mapStateToProps = state => {
+  return {
+    products: state.products,
+    productsInCart: state.cart.cart,
+    totalPurchase: state.cart.totalPurchase,
+  };
+};
+
+export default connect(mapStateToProps)(Home);

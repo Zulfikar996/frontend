@@ -21,6 +21,30 @@ class HomeScreen extends Component {
     await this.props.dispatch(getPromo());
     this.props.dispatch(getNew());
   }
+
+  convertToRupiah(angka) {
+    var rupiah = '';
+    var angkarev = angka
+      .toString()
+      .split('')
+      .reverse()
+      .join('');
+    for (var i = 0; i < angkarev.length; i++) {
+      if (i % 3 == 0) {
+        rupiah += angkarev.substr(i, 3) + '.';
+      }
+    }
+    return (
+      'Rp. ' +
+      rupiah
+        .split('', rupiah.length - 1)
+        .reverse()
+        .join('') +
+      ',-'
+    );
+  }
+
+
   renderRowPromo = ({item}) => {
     return (
       <View
@@ -83,7 +107,7 @@ class HomeScreen extends Component {
             />
             <View style={{alignItems: 'center'}}>
               <Text>{item.name}</Text>
-              <Text> {item.price} </Text>
+              <Text> {this.convertToRupiah(item.price)} </Text>
             </View>
           </View>
         </View>
