@@ -27,7 +27,7 @@ export const checkout = data => {
     type: "CHECKOUT",
     payload: axios({
       method: "POST",
-      url: `http://192.168.1.21:4444/transaction`,
+      url: `${API_KEY}/transaction`,
       data: data
     })
   };

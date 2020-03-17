@@ -23,8 +23,9 @@ import {
   Item,
   Input,
   Tab,
-  TabHeading
+  TabHeading,
 } from 'native-base';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import {Col, Row, Grid} from 'react-native-easy-grid';
 
@@ -74,6 +75,7 @@ class Cart extends Component {
   }
 
   render() {
+    console.log(this.props)
     console.log(this.props)
     const ViewCart = () => {
       if (this.props.productsInCart.length < 1) {
@@ -150,27 +152,15 @@ class Cart extends Component {
               </Text>
             </TouchableOpacity>
             </View>
-            {/* <Button small info
-            style={{backgroundColor: '#a5a6a8'}}
-              onPress={() =>
-                this.props.navigate('Checkout', {
-                  products: this.props.productsInCart,
-                })
-              }
-              info
-              style={{
-                justifyContent: 'center',
-                marginHorizontal: 18,
-              }}>
-              <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
-                Amount
-              </Text>
-            </Button> */}
           </Content>
         );
       }
     };
+    const { cart } = this.props
+    console.log(this.props)
     return (
+      <>
+      {this.props.productsInCart.length !== 0 ?
       <Container>
         <Grid>
           <Col>
@@ -178,6 +168,15 @@ class Cart extends Component {
           </Col>
         </Grid>
       </Container>
+      :
+      <>
+      <View style={{alignItems:'center', marginVertical:120}}>
+        <Icons name="cart-remove" size={300} ></Icons>
+       <Text>your chart is empty :(</Text>
+       </View>
+      </>
+      }
+      </>
     );
   }
 }
