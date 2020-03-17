@@ -6,6 +6,7 @@ import newProduct from './product';
 import promolebaran from './promo';
 import filterProduct from './product';
 import user from './user'
+import cart from './cart'
 
 export default combineReducers({
   category,
@@ -15,4 +16,5 @@ export default combineReducers({
   promolebaran,
   filterProduct,
   user,
+  cart
 });

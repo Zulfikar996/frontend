@@ -17,7 +17,7 @@ export const getPage = (page) => {
       type: 'GET_PRODUCT',
       payload: axios({
         method: 'GET',
-        url: `${API_KEY}/product?limit=4&page=${page}`,
+        url: `${API_KEY}/product?limit=6&page=${page}`,
       }),
     };
   };

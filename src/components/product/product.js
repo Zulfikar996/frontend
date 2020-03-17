@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {Header, Item, Input, Button} from 'native-base';
 import {getProduct, searchProduct, sortProduct,getPage} from '../redux/actions/product';
+import {postCart} from '../redux/actions/cart'
 
 class Product extends Component {
   constructor(){
@@ -22,20 +23,65 @@ class Product extends Component {
       data:[]
     }
   }
-  // getProduct() {
-  //   this.props.dispatch(getProduct());
-  // }
+  getProduct() {
+    this.props.dispatch(getProduct());
+  }
 
   componentDidMount() {
+    // this.getProduct()
     this.plusPage()
   }
-  plusPage = page =>{
+  async plusPage (page){
     this.setState({page:this.state.page + 1})
-    this.props.dispatch(getPage(this.state.page))
+    await this.props.dispatch(getPage(this.state.page))
     this.setState({
       data:this.state.data.concat(this.props.product)
     })
   }
+  addToCart = e => {
+    var a;
+    this.props.productsInCart.map(product => {
+      if (parseInt(product.productId) === parseInt(e.id)) {
+        a = 0;
+        return alert('Product is already in cart');
+      }
+      return product;
+    });
+    if (a !== 0) {
+      const data = {
+        name: e.name,
+        image: e.image,
+        productId: e.id,
+        price: e.price,
+        stock: e.stock,
+        quantity: 1,
+      };
+      this.props.dispatch(postCart(data));
+    }
+  };
+
+  convertToRupiah(angka) {
+    var rupiah = '';
+    var angkarev = angka
+      .toString()
+      .split('')
+      .reverse()
+      .join('');
+    for (var i = 0; i < angkarev.length; i++) {
+      if (i % 3 == 0) {
+        rupiah += angkarev.substr(i, 3) + '.';
+      }
+    }
+    return (
+      'Rp. ' +
+      rupiah
+        .split('', rupiah.length - 1)
+        .reverse()
+        .join('') +
+      ',-'
+    );
+  }
+
   searchProduct = name => {
     console.log(name);
     this.setState({
@@ -65,9 +111,9 @@ renderFooter =() =>{
           marginBottom: 10,
           // borderBottomWidth: 1,
           borderBottomColor: 'rgba(0,0,0,.1)',
-          height: 300,
+          height: 230,
           flexDirection: 'row',
-          marginHorizontal: '12%',
+          marginHorizontal: 7,
         }}>
         <View
           style={{
@@ -76,15 +122,15 @@ renderFooter =() =>{
             justifyItems: 'center',
             marginVertical: 4,
             backgroundColor: 'white',
-            height: '95%',
+            
           }}>
           <Image
-            source={{uri: item.image, width: '150%', height: '72%'}}
+            source={{uri: item.image, width: 150, height: 150}}
             style={{borderRadius: 5, marginHorizontal: 5, marginVertical: 5}}
           />
           {/* <View style={{flex: 1, backgroundColor:'red'}} ></View> */}
           <Text>{item.name}</Text>
-          <Text> {item.price} </Text>
+          <Text> {this.convertToRupiah(item.price)} </Text>
           <TouchableOpacity
             style={{
               backgroundColor: 'grey',
@@ -92,7 +138,8 @@ renderFooter =() =>{
               height: 25,
               justifyContent: 'center',
               alignItems: 'center',
-            }}>
+            }}
+            onPress={() => this.addToCart(item)}>
             <Text>Add To Cart</Text>
           </TouchableOpacity>
         </View>
@@ -177,7 +224,7 @@ renderFooter =() =>{
                   // onRefresh={this.onRefreshing}
                   keyExtractor={item => item.id}
                    onMomentumScrollEnd={this.nextPage}
-                   onEndReachedThreshold={0}
+                   onEndReachedThreshold={0.5}
                   ListFooterComponent={this.renderFooter}
                   numColumns={2}
                 />
@@ -200,6 +247,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     product: state.product.product,
+    productsInCart: state.cart.cart,
+    totalPurchase: state.cart.totalPurchase,
   };
 };
 export default connect(mapStateToProps)(Product);

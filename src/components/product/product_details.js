@@ -20,6 +20,28 @@ class productDetails extends Component {
     this.getFilter();
   }
 
+  convertToRupiah(angka) {
+    var rupiah = '';
+    var angkarev = angka
+      .toString()
+      .split('')
+      .reverse()
+      .join('');
+    for (var i = 0; i < angkarev.length; i++) {
+      if (i % 3 == 0) {
+        rupiah += angkarev.substr(i, 3) + '.';
+      }
+    }
+    return (
+      'Rp. ' +
+      rupiah
+        .split('', rupiah.length - 1)
+        .reverse()
+        .join('') +
+      ',-'
+    );
+  }
+
   renderRow = ({item}) => {
     return (
       <View
@@ -46,7 +68,7 @@ class productDetails extends Component {
           />
           {/* <View style={{flex: 1, backgroundColor:'red'}} ></View> */}
           <Text>{item.name}</Text>
-          <Text> {item.price} </Text>
+          <Text> {this.convertToRupiah(item.price)} </Text>
           <TouchableOpacity
             style={{
               backgroundColor: 'grey',

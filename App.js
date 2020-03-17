@@ -16,6 +16,8 @@ import Cart from './src/components/cart/cart';
 import LoginScreen from './src/components/login/LoginScreen';
 import Product from './src/components/product/product';
 import productDetails from './src/components/product/product_details'
+import CartScreen from './src/components/cart/cart';
+import Checkout from './src/components/cart/checkout';
 
 import {Text} from 'react-native';
 
@@ -30,6 +32,7 @@ const homeNavigator = createStackNavigator({
   LoginScreen: LoginScreen,
   Product: Product,
   productDetails: productDetails,
+  Checkout: Checkout,
 });
 
 const AppNavigator = createSwitchNavigator({
