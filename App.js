@@ -6,17 +6,20 @@ import store from './src/components/redux/store';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
+import { createBottomTabNavigator } from 'react-navigation-tabs';
 import Login from './src/components/login/Login';
 import Register from './src/components/login/Register';
 import Category from './src/components/category/category';
-import Home from './src/components/home/home'
-import HomeScreen from './src/components/home/homescreen'
+import Home from './src/components/home/home';
+import HomeScreen from './src/components/home/homescreen';
 import Cart from './src/components/cart/cart';
-import LoginScreen from './src/components/login/LoginScreen'
-import Product from './src/components/product/product'
+import LoginScreen from './src/components/login/LoginScreen';
+import Product from './src/components/product/product';
+import productDetails from './src/components/product/product_details'
 
 import {API_KEY} from 'react-native-dotenv';
 import {Text} from 'react-native';
+
 
 const homeNavigator = createStackNavigator({
   Home: Home,
@@ -27,11 +30,14 @@ const homeNavigator = createStackNavigator({
   Cart: Cart,
   LoginScreen: LoginScreen,
   Product: Product,
+  productDetails: productDetails,
 });
 
 const AppNavigator = createSwitchNavigator({
   Home: homeNavigator,
-})
+  Product: Product,
+  Login: Login,
+});
 
 const AppContainer = createAppContainer(AppNavigator);
 
