@@ -9,18 +9,32 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator
 } from 'react-native';
 import {Header, Item, Input, Button} from 'native-base';
-import {getProduct, searchProduct, sortProduct} from '../redux/actions/product';
+import {getProduct, searchProduct, sortProduct,getPage} from '../redux/actions/product';
 
 class Product extends Component {
-  getProduct() {
-    this.props.dispatch(getProduct());
+  constructor(){
+    super()
+    this.state={
+      page:1,
+      data:[]
+    }
   }
+  // getProduct() {
+  //   this.props.dispatch(getProduct());
+  // }
 
   componentDidMount() {
-    console.log('ini Did Mount');
-    this.getProduct();
+    this.plusPage()
+  }
+  plusPage = page =>{
+    this.setState({page:this.state.page + 1})
+    this.props.dispatch(getPage(this.state.page))
+    this.setState({
+      data:this.state.data.concat(this.props.product)
+    })
   }
   searchProduct = name => {
     console.log(name);
@@ -30,10 +44,19 @@ class Product extends Component {
     this.props.dispatch(searchProduct(name));
   };
   async onClickSort(type) {
-    console.log(type)
+    console.log(type);
     await this.props.dispatch(sortProduct(type));
   }
-
+nextPage=()=>{
+  this.setState(this.plusPage)
+}
+renderFooter =() =>{
+  return(
+    <View style={styles.loader}>
+      <ActivityIndicator size="large"/>
+    </View>
+  )
+}
   renderRow = ({item}) => {
     return (
       <View
@@ -42,13 +65,37 @@ class Product extends Component {
           marginBottom: 10,
           // borderBottomWidth: 1,
           borderBottomColor: 'rgba(0,0,0,.1)',
-          height: 230,
+          height: 300,
           flexDirection: 'row',
-          marginHorizontal: 7,
+          marginHorizontal: '12%',
         }}>
-        <Image source={{uri: item.image, width: 360, height: 150}} />
-        <TouchableOpacity><Text>Add to Cart</Text></TouchableOpacity>
-
+        <View
+          style={{
+            alignItems: 'center',
+            alignContent: 'center',
+            justifyItems: 'center',
+            marginVertical: 4,
+            backgroundColor: 'white',
+            height: '95%',
+          }}>
+          <Image
+            source={{uri: item.image, width: '150%', height: '72%'}}
+            style={{borderRadius: 5, marginHorizontal: 5, marginVertical: 5}}
+          />
+          {/* <View style={{flex: 1, backgroundColor:'red'}} ></View> */}
+          <Text>{item.name}</Text>
+          <Text> {item.price} </Text>
+          <TouchableOpacity
+            style={{
+              backgroundColor: 'grey',
+              width: 120,
+              height: 25,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Text>Add To Cart</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   };
@@ -121,18 +168,21 @@ class Product extends Component {
               </TouchableOpacity>
             </View>
 
-            <ScrollView>
+            {/* <ScrollView> */}
               <View style={styles.FlatList}>
                 <FlatList
-                  data={product}
+                  data={this.state.data}
                   renderItem={this.renderRow}
                   // refreshing={products.isLoading}
                   // onRefresh={this.onRefreshing}
                   keyExtractor={item => item.id}
+                   onMomentumScrollEnd={this.nextPage}
+                   onEndReachedThreshold={0}
+                  ListFooterComponent={this.renderFooter}
                   numColumns={2}
                 />
               </View>
-            </ScrollView>
+            {/* </ScrollView> */}
           </View>
           {/* </ImageBackground> */}
         </>
@@ -142,6 +192,10 @@ class Product extends Component {
 }
 const styles = StyleSheet.create({
   FlatList: {},
+  loader:{
+    marginTop:10,
+    alignItems:'center'
+  }
 });
 const mapStateToProps = state => {
   return {

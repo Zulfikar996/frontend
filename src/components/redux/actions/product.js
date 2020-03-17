@@ -11,7 +11,17 @@ export const getProduct = () => {
     }),
   };
 };
-
+export const getPage = (page) => {
+  //   console.log('ini di action redux');
+    return {
+      type: 'GET_PRODUCT',
+      payload: axios({
+        method: 'GET',
+        url: `${API_KEY}/product?limit=4&page=${page}`,
+      }),
+    };
+  };
+  
 export const getNew = () => {
   return {
     type: 'GET_NEW',
