@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import React, {Component} from 'react';
 import {Text, View, Image, FlatList, StyleSheet} from 'react-native';
 import {getCategory} from '../redux/actions/category';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class Category extends Component {
   getCategory() {
@@ -13,6 +14,7 @@ class Category extends Component {
     this.getCategory();
   }
   renderRow = ({item}) => {
+    console.log(item.category_id);
     return (
       <View
         style={{
@@ -22,12 +24,21 @@ class Category extends Component {
           borderBottomColor: 'rgba(0,0,0,.1)',
           height: 150,
         }}>
-        <Image source={{uri: item.image, width: 360, height: 150}} />
+        <TouchableOpacity
+          onPress={() =>
+            this.props.navigate('productDetails', {
+              category_id: item.category_id,
+              name: item.name,
+            })
+          }>
+          <Image source={{uri: item.image, width: 360, height: 150}} />
+        </TouchableOpacity>
       </View>
     );
   };
 
   render() {
+    console.log(this.props);
     const {category} = this.props;
     return (
       <>
@@ -41,7 +52,7 @@ class Category extends Component {
               keyExtractor={item => item.id}
             />
           </View>
-          </View>
+        </View>
       </>
     );
   }
@@ -50,7 +61,6 @@ const styles = StyleSheet.create({
   FlatList: {
     flex: 6,
   },
- 
 });
 const mapStateToProps = state => {
   return {
