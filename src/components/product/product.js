@@ -46,32 +46,9 @@ class Product extends Component {
           flexDirection: 'row',
           marginHorizontal: 7,
         }}>
-        <View
-          style={{
-            alignItems: 'center',
-            alignContent: 'center',
-            justifyItems: 'center',
-            marginVertical: 4,
-            backgroundColor: 'white',
-          }}>
-          <Image
-            source={{uri: item.image, width: 150, height: 150}}
-            style={{borderRadius: 5, marginHorizontal: 5, marginVertical: 5}}
-          />
-          {/* <View style={{flex: 1, backgroundColor:'red'}} ></View> */}
-          <Text>{item.name}</Text>
-          <Text> {item.price} </Text>
-          <TouchableOpacity
-            style={{
-              backgroundColor: 'grey',
-              width: 120,
-              height: 25,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <Text>Add To Cart</Text>
-          </TouchableOpacity>
-        </View>
+        <Image source={{uri: item.image, width: 360, height: 150}} />
+        <TouchableOpacity><Text>Add to Cart</Text></TouchableOpacity>
+
       </View>
     );
   };

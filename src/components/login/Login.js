@@ -9,12 +9,17 @@ import {
   Dimensions,
   TextInput,
   TouchableOpacity,
+  AsyncStorage
 } from 'react-native';
 import bg from '../../../images/bg_putih.png';
 import logo from '../../../images/gayain.png';
+import {API_KEY} from 'react-native-dotenv';
+import axios from 'axios'
+import {connect} from 'react-redux';
 
 const {width: WIDTH} = Dimensions.get('window');
-export default class Login extends Component {
+
+class Login extends Component {
   static navigationOptions = {
     header: null,
   };
@@ -26,6 +31,11 @@ export default class Login extends Component {
     };
   }
 
+  state={
+    email:'',
+    password:''
+  }
+
   showPass = () => {
     if (this.state.press === false) {
       this.setState({showPass: false, press: true});
@@ -33,6 +43,43 @@ export default class Login extends Component {
       this.setState({showPass: true, press: false});
     }
   };
+
+  onChangeEmail = (event) => {
+    console.log(event)
+    this.setState({
+      email:event
+     })
+  }
+
+  onChangePass = (event) => {
+    console.log(event)
+    this.setState({
+      password:event
+     })
+  }
+  
+  // saveData() {
+  //   let object = {
+  //     name 
+  //   }
+  // }
+
+  onSubmit = () => {
+
+    axios
+        .post(`${API_KEY}/user/login`, this.state)
+        .then(res => {
+            console.log(res.data);
+            AsyncStorage.setItem('token', res.data.token);
+            AsyncStorage.setItem('user-id', res.data.id);
+            AsyncStorage.setItem('Status', res.data.status );
+            AsyncStorage.setItem('isAuth', true);
+            this.props.navigation.navigate('Product');
+        })
+        .catch(err => {
+            console.log(err);
+        })
+}
 
   render() {
     return (
@@ -54,6 +101,7 @@ export default class Login extends Component {
               placeholder={'username'}
               placeholderTextColor={'rgba(255,255,255,0.7)'}
               underlinedColorAndroid="transparent"
+              onChangeText={this.onChangeEmail}
             />
           </View>
           <View style={styles.inputContainer}>
@@ -69,6 +117,7 @@ export default class Login extends Component {
               secureTextEntry={this.state.showPass}
               placeholderTextColor={'rgba(255,255,255,0.7)'}
               underlinedColorAndroid="transparent"
+              onChangeText={this.onChangePass}
             />
 
             <TouchableOpacity
@@ -81,7 +130,7 @@ export default class Login extends Component {
               />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.btnLogin}>
+          <TouchableOpacity style={styles.btnLogin} onPress={this.onSubmit}>
             <Text style={styles.text}>Login</Text>
           </TouchableOpacity>
         </ImageBackground>
@@ -89,6 +138,7 @@ export default class Login extends Component {
     );
   }
 }
+export default connect()(Login)
 
 const styles = StyleSheet.create({
   backgroundContainer: {
