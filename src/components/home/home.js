@@ -8,6 +8,7 @@ import {
   Tabs,
   TabHeading,
   Badge,
+  Image
 } from 'native-base';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -17,6 +18,8 @@ import Cart from '../cart/cart';
 import LoginScreen from '../login/LoginScreen';
 import Product from '../product/product'
 import {connect} from 'react-redux';
+import empty from '../../../images/empty.png'
+import logo from '../../../images/gayain.png'
 
 class Home extends Component {
   static navigationOptions = {
@@ -24,7 +27,8 @@ class Home extends Component {
   };
   
   render() {
-    const {Navigate} = this.props.navigation.navigate;
+    
+    let Image_Http_URL ={ uri: 'https://reactnativecode.com/wp-content/uploads/2017/05/react_thumb_install.png'};
     const a = 1;
     return (
       <>
@@ -63,7 +67,7 @@ class Home extends Component {
                   <Icon style={styles.icon} name="shoppingcart" />
                 </TabHeading>
               }>
-              <Cart navigate={this.props.navigation.navigate} />
+              <Cart navigate={this.props.navigation.navigate} image={Image_Http_URL} />
             </Tab>
             <Tab
               heading={

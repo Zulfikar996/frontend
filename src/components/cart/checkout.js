@@ -26,7 +26,7 @@ import {getProduct} from '../redux/actions/product';
 
 class Checkout extends Component {
   static navigationOptions = {
-    header: null,
+    tittle: null,
   };
   constructor(props) {
     super(props);
@@ -46,7 +46,7 @@ class Checkout extends Component {
       products: this.props.productsInCart,
     };
     this.props.dispatch(checkout(data));
-    this.props.navigation.navigate('Product');
+    this.props.navigation.navigate('Home');
   };
   componentDidMount() {
     const productsInCart = this.props.navigation.getParam('products');
@@ -61,6 +61,28 @@ class Checkout extends Component {
   componentDidUpdate() {
     this.props.dispatch(getProduct({}));
   }
+  convertToRupiah(angka) {
+    var rupiah = '';
+    var angkarev = angka
+      .toString()
+      .split('')
+      .reverse()
+      .join('');
+    for (var i = 0; i < angkarev.length; i++) {
+      if (i % 3 == 0) {
+        rupiah += angkarev.substr(i, 3) + '.';
+      }
+    }
+    return (
+      'Rp. ' +
+      rupiah
+        .split('', rupiah.length - 1)
+        .reverse()
+        .join('') +
+      ',-'
+    );
+  }
+
   render() {
     return (
       <Container>
@@ -76,13 +98,13 @@ class Checkout extends Component {
                     <Left>
                       <Body>
                         <Text>{item.name}</Text>
-                        <Text note>Rp. {item.price}</Text>
+                        <Text note>{this.convertToRupiah(item.price)}</Text>
                       </Body>
                     </Left>
                     <Right>
                       <View style={{flexDirection: 'row'}}>
                         <Text>{item.quantity}</Text>
-                        <Text> x {item.price}</Text>
+                        <Text> x {this.convertToRupiah(item.price)}</Text>
                       </View>
                     </Right>
                   </CardItem>
@@ -91,27 +113,30 @@ class Checkout extends Component {
               keyExtractor={item => item.productId.toString()}
             />
             <View style={{marginHorizontal: 20, marginTop: 10}}>
-              <Text>total: Rp. {this.state.totalPrice}</Text>
+              <Text>total: {this.convertToRupiah(this.state.totalPrice)}</Text>
               <View style={{marginHorizontal: 20, marginTop: 10}}>
               <Text> To continue your shopping, please transfer to BRI bank on behalf of PT. GayaIn Nusantara </Text>
               <Text style={{textAlign: 'center'}}> 44686-1234-4321-32 </Text>
               </View>
               
             </View>
-            <Button
+            <View style={{alignItems:'center', justifyContent:'center'}}>
+            <Button 
               onPress={() => this.checkout()}
               info
               disabled={this.state.Disabled}
               style={{
                 justifyContent: 'center',
-                marginHorizontal: 18,
                 marginTop: 10,
+                width: 200,
+                backgroundColor: '#f1a98c'
               }}>
               <Icon name="checkbox" />
               <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
                 Checkout
               </Text>
             </Button>
+            </View>
           </Content>
         </Col>
       </Grid>
