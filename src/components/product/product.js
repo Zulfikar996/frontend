@@ -23,7 +23,7 @@ class Product extends Component {
           height: 150,
         }}>
         <Image source={{uri: item.image, width: 360, height: 150}} />
-        <TouchableOpacity>Add to Cart</TouchableOpacity>
+        <TouchableOpacity><Text>Add to Cart</Text></TouchableOpacity>
 
       </View>
     );

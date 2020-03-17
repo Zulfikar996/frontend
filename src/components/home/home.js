@@ -7,13 +7,14 @@ import Category from '../category/category';
 import HomeScreen from '../home/homescreen';
 import Cart from '../cart/cart';
 import LoginScreen from '../login/LoginScreen';
-import Product from '../product/product';
+import Product from '../product/product'
 
 
 class Home extends Component {
   static navigationOptions = {
     header: null,
   };
+  
   render() {
     return (
       <>

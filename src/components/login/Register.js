@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {connect} from 'react-redux';
 import {
   StyleSheet,
   Text,
@@ -9,12 +10,40 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
+
+import { Button } from 'native-base'
+
+
+import {addUser} from '../redux/actions/user'
 import logo from '../../../images/gayain.png';
 const {width: WIDTH} = Dimensions.get('window');
+
+
 class Register extends Component {
   static navigationOptions = {
     header: null,
   };
+
+  state = {
+    name: '',
+    email: '',
+    username:'',
+    password:'',
+    address:'',
+    city: '',
+    province: '',
+  }
+
+  onSubmit =() => {
+    console.log(this.state)
+    this.props.dispatch(addUser(this.state));
+
+    // if(!this.props.products.products.isLoading){
+    //     this.props.navigation.navigate('Product');
+    // }
+    
+}
+
   render() {
     return (
       <>
@@ -26,40 +55,47 @@ class Register extends Component {
                 style={styles.textinput}
                 placeholder="Name"
                 underlineColorAndroid={'transparent'}
+                onChangeText={(text) => this.setState({ name: text })}
               />
               <TextInput
                 style={styles.textinput}
                 placeholder="Email"
                 underlineColorAndroid={'transparent'}
+                onChangeText={(text) => this.setState({ email: text })}
               />
               <TextInput
                 style={styles.textinput}
                 placeholder="Username"
                 underlineColorAndroid={'transparent'}
+                onChangeText={(text) => this.setState({ username: text })}
               />
               <TextInput
                 style={styles.textinput}
                 placeholder="Password"
                 underlineColorAndroid={'transparent'}
                 secureTextEntry={true}
+                onChangeText={(text) => this.setState({ password: text })}
               />
               <TextInput
                 style={styles.textinput}
                 placeholder="Address"
                 underlineColorAndroid={'transparent'}
+                onChangeText={(text) => this.setState({ alamat: text })}
               />
               <TextInput
                 style={styles.textinput}
                 placeholder="City"
                 underlineColorAndroid={'transparent'}
+                onChangeText={(text) => this.setState({kota: text })}
               />
               <TextInput
                 style={styles.textinput}
                 placeholder="Province"
                 underlineColorAndroid={'transparent'}
+                onChangeText={(text) => this.setState({ provinsi: text })}
               />
 
-              <TouchableOpacity style={styles.btnRegister}>
+              <TouchableOpacity style={styles.btnRegister} onPress={this.onSubmit}>
                 <Text style={styles.text}>Register</Text>
               </TouchableOpacity>
             </View>
@@ -69,7 +105,7 @@ class Register extends Component {
     );
   }
 }
-export default Register;
+export default connect()(Register);
 
 const styles = StyleSheet.create({
   container: {
