@@ -25,6 +25,7 @@ import {
   Tab,
   TabHeading
 } from 'native-base';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import {Col, Row, Grid} from 'react-native-easy-grid';
 
@@ -171,6 +172,8 @@ class Cart extends Component {
       }
     };
     return (
+      <>
+      {this.props.productsInCart.length !== 0 ?
       <Container>
         <Grid>
           <Col>
@@ -178,6 +181,15 @@ class Cart extends Component {
           </Col>
         </Grid>
       </Container>
+      :
+      <>
+      <View style={{alignItems:'center', marginVertical:120}}>
+        <Icons name="cart-remove" size={300} ></Icons>
+       <Text>your cart is empty :(</Text>
+       </View>
+      </>
+      }
+      </>
     );
   }
 }

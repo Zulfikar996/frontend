@@ -33,6 +33,11 @@ class Register extends Component {
     city: '',
     province: '',
   }
+  // componentDidMount(){
+  //   if (!this.props.auth.isAuthenticated) {
+  //     this.props.navigation.navigate('Login')
+  //   }
+  // }
 
   onSubmit =() => {
     console.log(this.state)
@@ -105,7 +110,13 @@ class Register extends Component {
     );
   }
 }
-export default connect()(Register);
+const mapStateToProps = (state) => {
+  return {
+      auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(Register);
 
 const styles = StyleSheet.create({
   container: {

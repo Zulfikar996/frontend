@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { login } from '../redux/actions/auth'
 import {
   StyleSheet,
   Text,
@@ -21,7 +22,7 @@ const {width: WIDTH} = Dimensions.get('window');
 
 class Login extends Component {
   static navigationOptions = {
-    header: null,
+    tittle: null,
   };
   constructor() {
     super();
@@ -34,6 +35,18 @@ class Login extends Component {
   state={
     email:'',
     password:''
+  }
+
+  componentDidMount(){
+    if(this.props.auth.isAuthenticated) {
+      this.props.navigation.navigate('Home')
+    }
+  }
+
+  onSubmit = async (e) =>{
+    console.log('ini submit', this.state)
+    await this.props.dispatch(login(this.state))
+    await this.props.navigation.navigate('Home')
   }
 
   showPass = () => {
@@ -64,24 +77,25 @@ class Login extends Component {
   //   }
   // }
 
-  onSubmit = () => {
+//   onSubmit = () => {
 
-    axios
-        .post(`${API_KEY}/user/login`, this.state)
-        .then(res => {
-            console.log(res.data);
-            AsyncStorage.setItem('token', res.data.token);
-            AsyncStorage.setItem('user-id', res.data.id);
-            AsyncStorage.setItem('Status', res.data.status );
-            AsyncStorage.setItem('isAuth', true);
-            this.props.navigation.navigate('Product');
-        })
-        .catch(err => {
-            console.log(err);
-        })
-}
+//     axios
+//         .post(`${API_KEY}/user/login`, this.state)
+//         .then(res => {
+//             console.log(res.data);
+//             AsyncStorage.setItem('token', res.data.token);
+//             AsyncStorage.setItem('user-id', res.data.id);
+//             AsyncStorage.setItem('Status', res.data.status );
+//             AsyncStorage.setItem('isAuth', true);
+//             this.props.navigation.navigate('Product');
+//         })
+//         .catch(err => {
+//             console.log(err);
+//         })
+// }
 
   render() {
+    console.log(this.props)
     return (
       <>
         <ImageBackground source={bg} style={styles.backgroundContainer}>
@@ -133,12 +147,24 @@ class Login extends Component {
           <TouchableOpacity style={styles.btnLogin} onPress={this.onSubmit}>
             <Text style={styles.text}>Login</Text>
           </TouchableOpacity>
+          
+        <View>
+        <Text>Don't have an account?</Text><TouchableOpacity onPress={()=>this.props.navigation.navigate('Register')}><Text>Register</Text></TouchableOpacity>
+
+        </View>
+
         </ImageBackground>
       </>
     );
   }
 }
-export default connect()(Login)
+const mapStateToProps = (state) => {
+  return {
+      auth: state.auth
+  }
+}
+
+export default connect(mapStateToProps)(Login)
 
 const styles = StyleSheet.create({
   backgroundContainer: {

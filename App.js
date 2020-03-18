@@ -2,7 +2,8 @@ import SplashScreen from 'react-native-splash-screen';
 import React, {Component} from 'react';
 import 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
-import store from './src/components/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from './src/components/redux/store';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
@@ -55,6 +56,7 @@ class App extends Component {
     return (
       <>
         <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}></PersistGate>
           <AppContainer />
         </Provider>
       </>
