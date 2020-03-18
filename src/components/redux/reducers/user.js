@@ -18,6 +18,31 @@ export default (user = (state=initialstate,action) =>{
                 ...state,
                 user : newDataUser
             }
+            case 'EDIT_USER_PENDING':
+                return{
+                    ...state
+                }
+            case 'EDIT_USER_REJECTED':
+                return{
+                    ...state
+                }
+            case 'EDIT_USER_FULFILLED':
+                const newUserEdit=state.user.map(user=>{
+                    if(user.id === action.payload.data.result.id){
+                        return action.payload.data.result
+                    }
+                    return user
+                })
+                return {
+                    state,
+                    user:newUserEdit
+                }
+                // const editDataUser = [...state.user, action.payload.data.result]
+                // return {
+                //     ...state,
+                //     user : editDataUser
+                // }
+
         default:
             return state;
     }

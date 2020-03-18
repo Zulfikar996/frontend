@@ -174,6 +174,7 @@ const mapStateToProps = state => {
   return {
     promo: state.promo.promo,
     newProduct: state.product.newProduct,
+    profile: state.profile
   };
 };
 export default connect(mapStateToProps)(HomeScreen);

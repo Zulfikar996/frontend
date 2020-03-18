@@ -12,3 +12,14 @@ export const addUser = (data) => {
     }),
   };
 };
+export const editUser = (userId,data) => {
+  // console.log('ini di action redux');
+  return {
+    type: 'EDIT_USER',
+    payload: axios({
+      method: 'PATCH',
+      url: `${API_KEY}/user/${userId}`,
+      data:data,
+    }),
+  };
+};

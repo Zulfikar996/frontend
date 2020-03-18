@@ -169,16 +169,11 @@ class Cart extends Component {
         </Grid>
       </Container>
       :
-      <>
+      
       <View style={{alignItems:'center', marginVertical:120}}>
         <Icons name="cart-remove" size={300} ></Icons>
-<<<<<<< HEAD
-       <Text>your chart is empty :(</Text>
-=======
        <Text>your cart is empty :(</Text>
->>>>>>> redux-persist
        </View>
-      </>
       }
       </>
     );

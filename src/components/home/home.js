@@ -15,11 +15,14 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import Category from '../category/category';
 import HomeScreen from '../home/homescreen';
 import Cart from '../cart/cart';
-import LoginScreen from '../login/LoginScreen';
+import Login from '../login/Login';
 import Product from '../product/product'
+
+import LoginScreen from '../login/LoginScreen'
 import {connect} from 'react-redux';
 import empty from '../../../images/empty.png'
 import logo from '../../../images/gayain.png'
+import { withNavigation } from 'react-navigation';
 
 class Home extends Component {
   static navigationOptions = {
@@ -75,7 +78,7 @@ class Home extends Component {
                   <Icon style={styles.icon} name="user" />
                 </TabHeading>
               }>
-              <LoginScreen navigate={this.props.navigation.navigate} />
+              <LoginScreen />
             </Tab>
           </Tabs>
         </Container>
@@ -102,4 +105,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(Home);
+export default withNavigation(connect(mapStateToProps)(Home));
