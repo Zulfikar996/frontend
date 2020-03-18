@@ -18,6 +18,8 @@ import {API_KEY} from 'react-native-dotenv';
 import axios from 'axios'
 import {connect} from 'react-redux';
 
+import { withNavigation } from 'react-navigation';
+
 const {width: WIDTH} = Dimensions.get('window');
 
 class Login extends Component {
@@ -46,7 +48,7 @@ class Login extends Component {
   onSubmit = async (e) =>{
     console.log('ini submit', this.state)
     await this.props.dispatch(login(this.state))
-    await this.props.navigation.navigate('Home')
+    this.props.navigation.navigate('Home')
   }
 
   showPass = () => {
@@ -95,7 +97,6 @@ class Login extends Component {
 // }
 
   render() {
-    console.log(this.props)
     return (
       <>
         <ImageBackground source={bg} style={styles.backgroundContainer}>
@@ -164,7 +165,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(Login)
+export default withNavigation(connect(mapStateToProps)(Login))
 
 const styles = StyleSheet.create({
   backgroundContainer: {

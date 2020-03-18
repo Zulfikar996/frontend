@@ -40,9 +40,8 @@ class Register extends Component {
   // }
 
   onSubmit =() => {
-    console.log(this.state)
     this.props.dispatch(addUser(this.state));
-
+    this.props.navigation.navigate('Login')
     // if(!this.props.products.products.isLoading){
     //     this.props.navigation.navigate('Product');
     // }

@@ -44,10 +44,10 @@ export const getFilter = (id) => {
 
 export const searchProduct = name => {
   return {
-    type: 'SEARCH_PRODUCT',
+    type: 'GET_PRODUCT',
     payload: axios({
       method: 'GET',
-      url: `${API_KEY}/product/?name=${name}`,
+      url: `${API_KEY}/product?name=${name}`,
     }),
   };
 };

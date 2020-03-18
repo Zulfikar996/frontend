@@ -2,6 +2,7 @@ const initialState = {
   product: [],
   newProduct: [],
   filterProduct: [],
+  searcProduct:[]
 };
 
 export default (product = (state = initialState, action) => {
@@ -18,7 +19,9 @@ export default (product = (state = initialState, action) => {
     case 'GET_PRODUCT_FULFILLED':
       return {
         ...state,
-        product: action.payload.data.result,
+        // product: state.product.concat(action.payload.data.result),
+        product:action.payload.data.result
+
       };
     case 'GET_NEW_PENDING':
       console.log('pending');
@@ -59,7 +62,7 @@ export default (product = (state = initialState, action) => {
     case 'SEARCH_PRODUCT_FULFILLED':
       return {
         ...state,
-        product: action.payload.data.result,
+        searcProduct: action.payload.data.result,
       };
     case 'SORT_PRODUCT_PENDING':
       return {

@@ -19,6 +19,7 @@ import Product from './src/components/product/product';
 import productDetails from './src/components/product/product_details'
 import CartScreen from './src/components/cart/cart';
 import Checkout from './src/components/cart/checkout';
+import profileUser from './src/components/user/profile'
 
 import {Text} from 'react-native';
 
@@ -34,12 +35,14 @@ const homeNavigator = createStackNavigator({
   Product: Product,
   productDetails: productDetails,
   Checkout: Checkout,
+  profileUser:profileUser
 });
 
 const AppNavigator = createSwitchNavigator({
   Home: homeNavigator,
   Product: Product,
   Login: Login,
+  Register: Register,
 });
 
 const AppContainer = createAppContainer(AppNavigator);

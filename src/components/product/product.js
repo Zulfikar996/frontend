@@ -34,11 +34,12 @@ class Product extends Component {
     this.plusPage()
   }
   async plusPage (page){
-    this.setState({page:this.state.page + 1})
+    // this.setState({page:this.state.page + 1})
     await this.props.dispatch(getPage(this.state.page))
-    this.setState({
-      data:this.state.data.concat(this.props.product)
-    })
+
+    // this.setState({
+    //   data:this.state.data.concat(this.props.product)
+    // })
   }
   addToCart = e => {
     if (!this.props.auth.isAuthenticated) {
@@ -120,7 +121,10 @@ class Product extends Component {
     await this.props.dispatch(sortProduct(type));
   }
 nextPage=()=>{
-  this.setState(this.plusPage)
+  this.setState(this.setState({
+    page:this.state.page + 1
+  }))
+  this.plusPage(this.state.page)
 }
 renderFooter =() =>{
   return(
@@ -248,6 +252,25 @@ renderFooter =() =>{
                   height: 30,
                   marginLeft: 10,
                 }}>
+                    <TouchableOpacity
+                style={{
+                  backgroundColor: '#FFAEAE',
+                  borderRadius: 25,
+                  width: 100,
+                  height: 30,
+                  marginLeft: 10,
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 18,
+                    fontFamily: 'sans-serif-condensed',
+                    color: 'white',
+                  }}
+                  onPress={()=>this.props.navigate('profileUser')}>
+                  User
+                </Text>
+              </TouchableOpacity>
                 <Text
                   style={{
                     textAlign: 'center',
@@ -259,6 +282,7 @@ renderFooter =() =>{
                   Logout
                 </Text>
               </TouchableOpacity>
+            
 
 
             </View>
@@ -266,7 +290,7 @@ renderFooter =() =>{
             {/* <ScrollView> */}
               <View style={styles.FlatList}>
                 <FlatList
-                  data={this.state.data}
+                  data={this.props.product}
                   renderItem={this.renderRow}
                   // refreshing={products.isLoading}
                   // onRefresh={this.onRefreshing}
