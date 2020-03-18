@@ -39,14 +39,14 @@ class Checkout extends Component {
   };
 
 
-  checkout = () => {
-    alert('success');
+  async checkout (){
     const data = {
         id_transaction: `${uuid()}`,
       products: this.props.productsInCart,
     };
-    this.props.dispatch(checkout(data));
-    this.props.navigation.navigate('Home');
+    await this.props.dispatch(checkout(data));
+    await this.props.navigation.navigate('Home');
+    alert('Success')
   };
   componentDidMount() {
     const productsInCart = this.props.navigation.getParam('products');

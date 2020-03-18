@@ -56,7 +56,7 @@ class Home extends Component {
                   <Icon style={styles.icon} name="isv" />
                 </TabHeading>
               }>
-              <Product navigate={this.props.navigation.navigate} />
+              <Product navigate={this.props.navigation.navigate} auth={this.props.auth} />
             </Tab>
             <Tab
               heading={
@@ -98,6 +98,7 @@ const mapStateToProps = state => {
     products: state.products,
     productsInCart: state.cart.cart,
     totalPurchase: state.cart.totalPurchase,
+    auth: state.auth
   };
 };
 

@@ -9,11 +9,13 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
-  ActivityIndicator
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {Header, Item, Input, Button} from 'native-base';
 import {getProduct, searchProduct, sortProduct,getPage} from '../redux/actions/product';
 import {postCart} from '../redux/actions/cart'
+import { logout } from '../redux/actions/auth'
 
 class Product extends Component {
   constructor(){
@@ -39,6 +41,24 @@ class Product extends Component {
     })
   }
   addToCart = e => {
+    if (!this.props.auth.isAuthenticated) {
+      Alert.alert(
+        'Cannot add to cart',
+        //body
+        'Please Login to Add Cart',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('No Pressed'),
+            style: 'cancel',
+          },
+          {text: 'Login', onPress: () => this.props.navigate('Login')},
+        ],
+        {cancelable: false},
+      );
+      // this.props.navigation.navigate('Login')
+    }
+    else {
     var a;
     this.props.productsInCart.map(product => {
       if (parseInt(product.productId) === parseInt(e.id)) {
@@ -58,7 +78,13 @@ class Product extends Component {
       };
       this.props.dispatch(postCart(data));
     }
+  }
   };
+
+  onLogout () {
+    this.props.dispatch(logout())
+    this.props.navigate('Home')
+  }
 
   convertToRupiah(angka) {
     var rupiah = '';
@@ -148,6 +174,7 @@ renderFooter =() =>{
   };
 
   render() {
+    console.log(this.props)
     const {product} = this.props;
     console.log(product);
     console.log('ini');
@@ -213,6 +240,27 @@ renderFooter =() =>{
                   Lowest
                 </Text>
               </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#FFAEAE',
+                  borderRadius: 25,
+                  width: 100,
+                  height: 30,
+                  marginLeft: 10,
+                }}>
+                <Text
+                  style={{
+                    textAlign: 'center',
+                    fontSize: 18,
+                    fontFamily: 'sans-serif-condensed',
+                    color: 'white',
+                  }}
+                  onPress={() => this.onLogout()}>
+                  Logout
+                </Text>
+              </TouchableOpacity>
+
+
             </View>
 
             {/* <ScrollView> */}
