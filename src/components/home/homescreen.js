@@ -121,7 +121,7 @@ class HomeScreen extends Component {
     console.log(this.props);
     return (
       <>
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} >
         <View style={{flex: 1, flexDirection: 'column'}}>
           <View style={styles.FlatList}>
             <ScrollView
@@ -140,7 +140,7 @@ class HomeScreen extends Component {
         </View>
 
         <View style={{marginLeft: 15}}>
-          <Text>NEW ARRIVALS</Text>
+          <Text style={{fontFamily: 'monospace', fontSize: 20, fontWeight:'bold'}}>NEW ARRIVALS</Text>
         </View>
 
         <View style={{flex: 1, flexDirection: 'row'}}>

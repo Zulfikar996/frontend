@@ -20,6 +20,7 @@ import productDetails from './src/components/product/product_details'
 import CartScreen from './src/components/cart/cart';
 import Checkout from './src/components/cart/checkout';
 import profileUser from './src/components/user/profile'
+import Spinner from './src/components/spinner/spinner'
 
 import {Text} from 'react-native';
 
@@ -35,7 +36,8 @@ const homeNavigator = createStackNavigator({
   Product: Product,
   productDetails: productDetails,
   Checkout: Checkout,
-  profileUser:profileUser
+  profileUser:profileUser,
+  Spinner: Spinner,
 });
 
 const AppNavigator = createSwitchNavigator({

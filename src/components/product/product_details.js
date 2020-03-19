@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {getFilter} from '../redux/actions/product';
-
+import {postCart} from '../redux/actions/cart'
+import { withNavigation } from 'react-navigation';
 import {View, Text, TouchableOpacity, StyleSheet, FlatList, Image} from 'react-native';
 
 class productDetails extends Component {
@@ -19,6 +20,46 @@ class productDetails extends Component {
   componentDidMount() {
     this.getFilter();
   }
+  addToCart = e => {
+    if (!this.props.auth.isAuthenticated) {
+      Alert.alert(
+        'Cannot add to cart',
+        //body
+        'Please Login to Add Cart',
+        [
+          {
+            text: 'Cancel',
+            onPress: () => console.log('No Pressed'),
+            style: 'cancel',
+          },
+          {text: 'Login', onPress: () => this.props.navigate('Login')},
+        ],
+        {cancelable: false},
+      );
+      // this.props.navigation.navigate('Login')
+    }
+    else {
+    var a;
+    this.props.productsInCart.map(product => {
+      if (parseInt(product.productId) === parseInt(e.id)) {
+        a = 0;
+        return alert('Product is already in cart');
+      }
+      return product;
+    });
+    if (a !== 0) {
+      const data = {
+        name: e.name,
+        image: e.image,
+        productId: e.id,
+        price: e.price,
+        stock: e.stock,
+        quantity: 1,
+      };
+      this.props.dispatch(postCart(data));
+    }
+  }
+  };
 
   convertToRupiah(angka) {
     var rupiah = '';
@@ -76,7 +117,9 @@ class productDetails extends Component {
               height: 25,
               justifyContent: 'center',
               alignItems: 'center',
-            }}>
+            }}
+            onPress={() => this.addToCart(item)}
+            >
             <Text>Add To Cart</Text>
           </TouchableOpacity>
         </View>
@@ -116,4 +159,4 @@ const mapStateToProps = state => {
     product: state.product.filterProduct,
   };
 };
-export default connect(mapStateToProps)(productDetails);
+export default withNavigation(connect(mapStateToProps)(productDetails));

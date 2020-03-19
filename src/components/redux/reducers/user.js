@@ -37,11 +37,19 @@ export default (user = (state=initialstate,action) =>{
                     state,
                     user:newUserEdit
                 }
-                // const editDataUser = [...state.user, action.payload.data.result]
-                // return {
-                //     ...state,
-                //     user : editDataUser
-                // }
+                case 'GET_USER_PENDING':
+                    return {
+                      ...state,
+                    };
+                  case 'GET_USER_REJECTED':
+                    return {
+                      ...state,
+                    };
+                  case 'GET_USER_FULFILLED':
+                    return {
+                      ...state,
+                      user: action.payload.data.result,
+                    };
 
         default:
             return state;

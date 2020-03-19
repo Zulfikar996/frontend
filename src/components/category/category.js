@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {Text, View, Image, FlatList, StyleSheet} from 'react-native';
 import {getCategory} from '../redux/actions/category';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import { withNavigation } from 'react-navigation';
 
 class Category extends Component {
   getCategory() {
@@ -42,6 +43,7 @@ class Category extends Component {
     const {category} = this.props;
     return (
       <>
+       {/* <Spinner isLoading={category.isLoading} /> */}
         <View style={{flex: 1, flexDirection: 'column'}}>
           <View style={styles.FlatList}>
             <FlatList
@@ -67,4 +69,4 @@ const mapStateToProps = state => {
     category: state.category.category,
   };
 };
-export default connect(mapStateToProps)(Category);
+export default withNavigation(connect(mapStateToProps)(Category));

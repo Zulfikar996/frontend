@@ -2,9 +2,10 @@ import React from 'react';
 import {View, Text, Image, Button, TextInput, StyleSheet,TouchableOpacity} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 import {editUser} from '../redux/actions/user'
-export default class profileUser extends React.Component {
+import {withNavigation} from 'react-navigation';
+import {connect} from 'react-redux';
+class profileUser extends React.Component {
   state = {
-      id:'',
     name:'',
     email: '',
     username: '',
@@ -36,90 +37,42 @@ export default class profileUser extends React.Component {
       }
     });
   };
- onSubmit=async event =>{
+ onSubmit= async (event) =>{
      event.preventDefault()
-     const userId=this.state.id
+     const userId=this.props.auth.profile.id
      let data = new FormData()
      const file={
          name:this.state.image.fileName,
          type:this.state.image.type,
          uri:this.state.image.uri
      }
-     data.append('name',this.state.name)
      data.append('image',file)
-     data.append('email',this.state.email)
-     data.append('username',this.state.username)
-     data.append('password',this.state.password)
-     data.append('alamat',this.state.alamat)
-     data.append('provinsi',this.state.provinsi)
-     data.append('kota',this.state.kota)
-    //  console.log(data)
+    //  data.append('email',this.state.email)
+    //  data.append('username',this.state.username)
+    //  data.append('password',this.state.password)
+    //  data.append('alamat',this.state.alamat)
+    //  data.append('provinsi',this.state.provinsi)
+    //  data.append('kota',this.state.kota)
+    // //  console.log(data)
     await this.props.dispatch(editUser(userId,data))
+    this.props.navigation.navigate('Home')
 //destinasi ketika sukses
      
  }
   render() {
     console.log(this.state);
     const {image} = this.state;
+    const profile = this.props.auth.profile;
     return (
         <View>
         <View>
-        <TextInput
-                style={styles.textinput}
-                placeholder="id"
-                underlineColorAndroid={'transparent'}
-                onChangeText={(text) => this.setState({ id: text })}
-              />
-              <TextInput
-                style={styles.textinput}
-                placeholder="Name"
-                underlineColorAndroid={'transparent'}
-                onChangeText={(text) => this.setState({ name: text })}
-              />
-              <TextInput
-                style={styles.textinput}
-                placeholder="Email"
-                underlineColorAndroid={'transparent'}
-                onChangeText={(text) => this.setState({ email: text })}
-              />
-              <TextInput
-                style={styles.textinput}
-                placeholder="Username"
-                underlineColorAndroid={'transparent'}
-                onChangeText={(text) => this.setState({ username: text })}
-              />
-              <TextInput
-                style={styles.textinput}
-                placeholder="Password"
-                underlineColorAndroid={'transparent'}
-                secureTextEntry={true}
-                onChangeText={(text) => this.setState({ password: text })}
-              />
-              <TextInput
-                style={styles.textinput}
-                placeholder="Address"
-                underlineColorAndroid={'transparent'}
-                onChangeText={(text) => this.setState({ alamat: text })}
-              />
-              <TextInput
-                style={styles.textinput}
-                placeholder="City"
-                underlineColorAndroid={'transparent'}
-                onChangeText={(text) => this.setState({kota: text })}
-              />
-              <TextInput
-                style={styles.textinput}
-                placeholder="Province"
-                underlineColorAndroid={'transparent'}
-                onChangeText={(text) => this.setState({ provinsi: text })}
-              />
                <View style={{ marginTop:10, marginBottom:10, alignItems: 'center', justifyContent: 'center'}}>
             {image && (
               <Image source={{uri: image.uri}} style={{width: 100, height: 90}} />
             )}
-            <Button title="Choose Photo" onPress={this.handleChoosePhoto} />
-
-            <Button title="launch camera" onPress={this.handleChooseCamera} />
+              <TouchableOpacity onPress={this.handleChoosePhoto} style={{backgroundColor:'#a5a6a8', width:100, height: 30, justifyContent:'center', alignItems:'center'}} ><Text>Choose Image</Text></TouchableOpacity>
+              <TouchableOpacity onPress={this.handleChooseCamera} style={{backgroundColor:'#a5a6a8', width:100, height: 30, justifyContent:'center', marginVertical: 10, alignItems:'center'}} ><Text>Launch Camera</Text></TouchableOpacity>
+            
              </View>
               <TouchableOpacity style={styles.btnRegister} onPress={this.onSubmit}>
                 <Text style={styles.text}>Set profile</Text>
@@ -130,6 +83,12 @@ export default class profileUser extends React.Component {
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  };
+};
+export default withNavigation(connect(mapStateToProps)(profileUser));
 const styles=StyleSheet.create({
     textinput: {
         alignSelf: 'stretch',
@@ -140,10 +99,12 @@ const styles=StyleSheet.create({
         borderBottomWidth: 1,
       },
       btnRegister: {
-          marginTop:20,
+        marginTop:10,
         height: 45,
+        width:200,
         borderRadius: 25,
         fontSize: 18,
+        marginHorizontal: 80,
         backgroundColor: '#f1a98c',
         justifyContent: 'center',
       },

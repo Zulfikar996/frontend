@@ -15,7 +15,6 @@ import {
 import {Header, Item, Input, Button} from 'native-base';
 import {getProduct, searchProduct, sortProduct,getPage} from '../redux/actions/product';
 import {postCart} from '../redux/actions/cart'
-import { logout } from '../redux/actions/auth'
 
 class Product extends Component {
   constructor(){
@@ -81,11 +80,6 @@ class Product extends Component {
     }
   }
   };
-
-  onLogout () {
-    this.props.dispatch(logout())
-    this.props.navigate('Home')
-  }
 
   convertToRupiah(angka) {
     var rupiah = '';

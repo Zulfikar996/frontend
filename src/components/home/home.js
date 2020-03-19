@@ -8,7 +8,7 @@ import {
   Tabs,
   TabHeading,
   Badge,
-  Image
+  Image,
 } from 'native-base';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -35,7 +35,7 @@ class Home extends Component {
     const a = 1;
     return (
       <>
-        <Container>
+        <Container style={styles.container}>
           <Tabs tabBarPosition="bottom">
             <Tab
               heading={
@@ -94,6 +94,9 @@ const styles = StyleSheet.create({
   tab: {
     backgroundColor: 'white',
   },
+  container: {
+    fontFamily: 'monospace',
+  }
 });
 
 const mapStateToProps = state => {
