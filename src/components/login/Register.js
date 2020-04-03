@@ -9,6 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from 'react-native';
 
 import { Button } from 'native-base'
@@ -36,11 +37,18 @@ class Register extends Component {
 
   onSubmit =() => {
     console.log(this.state)
-    this.props.dispatch(addUser(this.state));
-
-    // if(!this.props.products.products.isLoading){
-    //     this.props.navigation.navigate('Product');
-    // }
+    if(this.state.name < 3){
+      Alert.alert('Error','input valid name')
+    }
+    if(this.state.email < 3){
+      Alert.alert('Error','input valid email')
+    }
+    if(this.state.username < 3){
+      Alert.alert('Error','input valid username')
+    }
+    if(this.state.password < 6){
+      Alert.alert('Error','password more than 6 character')
+    }
     
 }
 
