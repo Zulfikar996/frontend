@@ -20,7 +20,6 @@ import Product from '../product/product'
 
 import LoginScreen from '../login/LoginScreen'
 import {connect} from 'react-redux';
-import empty from '../../../images/empty.png'
 import logo from '../../../images/gayain.png'
 import { withNavigation } from 'react-navigation';
 
